@@ -2,10 +2,14 @@ import Link from "next/link";
 
 export default function HomePage() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-[#2e026d] to-[#15162c] text-white">
+    <main className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-[#1a472a] to-[#0a0a0a] text-white">
       <div className="container flex flex-col items-center justify-center gap-12 px-4 py-16">
         <h1 className="text-5xl font-extrabold tracking-tight text-white sm:text-[5rem]">
-          Create <span className="text-[hsl(280,100%,70%)]">T3</span> App
+          Welcome{" "}
+          <span className="cookie text-[8rem] text-[hsl(142,100%,70%)]">
+            Scout
+          </span>
+          , your new <span className="text-[hsl(142,100%,70%)]">AI</span> Lister
         </h1>
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:gap-8">
           <Link
@@ -13,7 +17,7 @@ export default function HomePage() {
             href="https://create.t3.gg/en/usage/first-steps"
             target="_blank"
           >
-            <h3 className="text-2xl font-bold">First Steps →</h3>
+            <h3 className="text-2xl font-bold">Get Started →</h3>
             <div className="text-lg">
               Just the basics - Everything you need to know to set up your
               database and authentication.
@@ -24,7 +28,7 @@ export default function HomePage() {
             href="https://create.t3.gg/en/introduction"
             target="_blank"
           >
-            <h3 className="text-2xl font-bold">Documentation →</h3>
+            <h3 className="text-2xl font-bold">Learn More →</h3>
             <div className="text-lg">
               Learn more about Create T3 App, the libraries it uses, and how to
               deploy it.
