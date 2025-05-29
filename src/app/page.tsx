@@ -13,25 +13,23 @@ export default function HomePage() {
         </h1>
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:gap-8">
           <Link
-            className="flex max-w-xs flex-col gap-4 rounded-xl bg-white/10 p-4 text-white hover:bg-white/20"
+            className="flex max-w-md flex-col gap-4 rounded-xl bg-white/20 p-8 text-white shadow-[0_0_15px_rgba(255,255,255,0.1)] transition-all duration-200 hover:scale-105 hover:bg-white/30 hover:shadow-[0_0_20px_rgba(255,255,255,0.2)]"
             href="https://create.t3.gg/en/usage/first-steps"
             target="_blank"
           >
-            <h3 className="text-2xl font-bold">Get Started →</h3>
-            <div className="text-lg">
-              Just the basics - Everything you need to know to set up your
-              database and authentication.
+            <h3 className="text-3xl font-bold">Get Started →</h3>
+            <div className="text-xl">
+              Get started with Scout, your new AI Lister.
             </div>
           </Link>
           <Link
-            className="flex max-w-xs flex-col gap-4 rounded-xl bg-white/10 p-4 text-white hover:bg-white/20"
+            className="flex max-w-md flex-col gap-4 rounded-xl bg-white/10 p-8 text-white hover:bg-white/20"
             href="https://create.t3.gg/en/introduction"
             target="_blank"
           >
-            <h3 className="text-2xl font-bold">Learn More →</h3>
-            <div className="text-lg">
-              Learn more about Create T3 App, the libraries it uses, and how to
-              deploy it.
+            <h3 className="text-3xl font-bold">Learn More →</h3>
+            <div className="text-xl">
+              Learn more about what Scout can do for you.
             </div>
           </Link>
         </div>
