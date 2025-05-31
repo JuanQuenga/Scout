@@ -14,11 +14,11 @@ export default function HomePage() {
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:gap-8">
           <Link
             className="flex max-w-md flex-col gap-4 rounded-xl bg-white/20 p-8 text-white shadow-[0_0_15px_rgba(255,255,255,0.1)] transition-all duration-200 hover:scale-105 hover:bg-white/30 hover:shadow-[0_0_20px_rgba(255,255,255,0.2)]"
-            href="/inventory"
+            href="/lots/video-games"
           >
-            <h3 className="text-3xl font-bold">Get Started →</h3>
+            <h3 className="text-3xl font-bold">Video Game Lots</h3>
             <div className="text-xl">
-              Get started with Scout, your new AI Lister.
+              See how Scout helps streamline doing video game lots.
             </div>
           </Link>
           <Link
