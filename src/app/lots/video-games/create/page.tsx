@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useState } from "react";
 import { searchGamePrices, type GamePrice } from "./../../../../lib/scraper";
+import axios from "axios";
 
 export default function CreateVideoGameLot() {
   const [searchQuery, setSearchQuery] = useState("");
@@ -17,11 +18,22 @@ export default function CreateVideoGameLot() {
     setIsSearching(true);
     setError(null);
     try {
-      const results = await searchGamePrices(searchQuery);
+      const response = await fetch(
+        `/api/ebay?q=${encodeURIComponent(searchQuery)}`,
+      );
+      if (!response.ok) {
+        const errorData = (await response.json()) as { error?: string };
+        throw new Error(errorData.error ?? "Failed to fetch game prices");
+      }
+      const results = (await response.json()) as GamePrice[];
       setSearchResults(results);
     } catch (err) {
       console.error("Search failed:", err);
-      setError("Failed to search game prices. Please try again.");
+      setError(
+        err instanceof Error
+          ? err.message
+          : "Failed to search game prices. Please try again.",
+      );
       setSearchResults([]);
     } finally {
       setIsSearching(false);

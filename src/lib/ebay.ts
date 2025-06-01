@@ -1,3 +1,5 @@
+import axios from "axios";
+
 export interface EbayPrice {
   value: number;
   currency: string;
@@ -30,47 +32,100 @@ interface EbayApiResponse {
   }>;
 }
 
-const EBAY_API_KEY = process.env.NEXT_PUBLIC_EBAY_API_KEY;
-
-if (!EBAY_API_KEY) {
-  throw new Error("EBAY_API_KEY environment variable is not set");
+interface EbayConfig {
+  clientId: string;
+  clientSecret: string;
 }
 
-export async function searchSoldListings(
-  query: string,
-): Promise<EbaySoldItem[]> {
-  try {
-    const response = await fetch(
-      `https://api.ebay.com/buy/browse/v1/item_summary/search?q=${encodeURIComponent(query)}&filter=soldItems`,
+interface EbayItem {
+  title: string;
+  price: {
+    value: string;
+    currency: string;
+  };
+  condition: string;
+  imageUrl?: string;
+  itemId: string;
+}
+
+interface EbayTokenResponse {
+  access_token: string;
+  expires_in: number;
+}
+
+interface EbaySearchResponse {
+  items: Array<{
+    title: string;
+    price: {
+      value: string;
+      currency: string;
+    };
+    condition: string;
+    image?: {
+      imageUrl: string;
+    };
+    itemId: string;
+  }>;
+}
+
+export class EbayService {
+  private accessToken: string | null = null;
+  private tokenExpiry = 0;
+
+  constructor(private config: EbayConfig) {}
+
+  private async getAccessToken(): Promise<string> {
+    if (this.accessToken && Date.now() < this.tokenExpiry) {
+      return this.accessToken;
+    }
+
+    const response = await axios.post<EbayTokenResponse>(
+      "https://api.ebay.com/identity/v1/oauth2/token",
+      "grant_type=client_credentials&scope=https://api.ebay.com/oauth/api_scope https://api.ebay.com/oauth/api_scope/sell.marketing.readonly https://api.ebay.com/oauth/api_scope/sell.inventory.readonly",
       {
         headers: {
-          Authorization: `Bearer ${EBAY_API_KEY}`,
+          "Content-Type": "application/x-www-form-urlencoded",
+          Authorization: `Basic ${Buffer.from(`${this.config.clientId}:${this.config.clientSecret}`).toString("base64")}`,
+        },
+      },
+    );
+
+    this.accessToken = response.data.access_token;
+    this.tokenExpiry = Date.now() + response.data.expires_in * 1000;
+    return this.accessToken;
+  }
+
+  async searchSoldItems(query: string): Promise<EbayItem[]> {
+    const token = await this.getAccessToken();
+
+    const response = await axios.get<EbaySearchResponse>(
+      "https://api.ebay.com/buy/marketplace_insights/v1_beta/item_sales/search",
+      {
+        params: {
+          q: query,
+          limit: 50,
+          filter: "soldItems",
+          fieldgroups: "ASPECT_REFINEMENTS,MATCHING_ITEMS",
+        },
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "X-EBAY-C-MARKETPLACE-ID": "EBAY_US",
+          "X-EBAY-C-ENDUSERCTX":
+            "affiliateCampaignId=<ePNCampaignId>,affiliateReferenceId=<referenceId>",
           "Content-Type": "application/json",
         },
       },
     );
 
-    if (!response.ok) {
-      throw new Error(`eBay API error: ${response.statusText}`);
-    }
-
-    const data = (await response.json()) as EbayApiResponse;
-
-    // Transform the eBay API response to our EbaySoldItem type
-    return data.itemSummaries.map((item) => ({
-      itemId: item.itemId,
+    return response.data.items.map((item) => ({
       title: item.title,
       price: {
-        value: parseFloat(item.price.value),
+        value: item.price.value,
         currency: item.price.currency,
       },
-      soldDate: item.soldDate,
-      imageUrl: item.image?.imageUrl,
       condition: item.condition,
-      platform: item.platform,
+      imageUrl: item.image?.imageUrl,
+      itemId: item.itemId,
     }));
-  } catch (error) {
-    console.error("Error searching eBay listings:", error);
-    throw error;
   }
 }

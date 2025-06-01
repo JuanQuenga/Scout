@@ -8,6 +8,8 @@ export const env = createEnv({
    */
   server: {
     NODE_ENV: z.enum(["development", "test", "production"]),
+    EBAY_CLIENT_ID: z.string(),
+    EBAY_CLIENT_SECRET: z.string(),
   },
 
   /**
@@ -25,6 +27,8 @@ export const env = createEnv({
    */
   runtimeEnv: {
     NODE_ENV: process.env.NODE_ENV,
+    EBAY_CLIENT_ID: process.env.EBAY_CLIENT_ID,
+    EBAY_CLIENT_SECRET: process.env.EBAY_CLIENT_SECRET,
     // NEXT_PUBLIC_CLIENTVAR: process.env.NEXT_PUBLIC_CLIENTVAR,
   },
   /**
