@@ -76,7 +76,7 @@ export default function CreateVideoGameLot() {
             <span className="text-[hsl(142,100%,70%)]">Lot</span>
           </h1>
           <Link
-            href="/lots/video-games"
+            href="/video-game-lots"
             className="rounded-lg bg-white/10 px-4 py-2 text-white/70 transition-colors duration-200 hover:bg-white/20 hover:text-white"
           >
             ← Back
