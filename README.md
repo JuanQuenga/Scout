@@ -1,4 +1,4 @@
-# Scout AI
+# Scout
 
 Listing tools that to improve efficiency and productivity.
 
