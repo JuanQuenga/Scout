@@ -2,8 +2,15 @@
 
 import Link from "next/link";
 import { useState } from "react";
-import { searchGamePrices, type GamePrice } from "./../../../../lib/scraper";
-import axios from "axios";
+
+export interface GamePrice {
+  title: string;
+  platform: string;
+  condition: string;
+  price: number;
+  imageUrl?: string;
+  url: string;
+}
 
 export default function CreateVideoGameLot() {
   const [searchQuery, setSearchQuery] = useState("");
