@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Monitor, Disc, Gamepad2, Laptop } from "lucide-react";
+import { Monitor, Disc, Gamepad2, Laptop, Info, Calendar } from "lucide-react";
 
 function floorTo5(num: number) {
   return Math.floor(num / 5) * 5;
@@ -358,6 +358,7 @@ const brandSections = [
 export default function QuotesPage() {
   const [projection, setProjection] = useState(0);
   const [input, setInput] = useState("");
+  const [showInfo, setShowInfo] = useState(false);
 
   // Calculate ranges based on the Google Sheet logic
   const averageRange = projection
@@ -375,93 +376,122 @@ export default function QuotesPage() {
 
   return (
     <div className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-[#1a472a] to-[#0a0a0a] px-4 py-16 text-white">
-      <div className="mb-12 w-full max-w-md rounded-xl bg-white/10 p-8 shadow-lg">
-        <h1 className="mb-6 text-center text-3xl font-bold">
-          Quote Calculator
-        </h1>
-        <label className="mb-2 block font-medium">
-          Projected Resale Value ($)
-        </label>
-        <input
-          type="number"
-          min={0}
-          value={input}
-          onChange={(e) => {
-            setInput(e.target.value);
-            setProjection(Number(e.target.value));
-          }}
-          className="mb-6 w-full rounded-lg bg-white/20 px-4 py-2 text-white placeholder-white/60 focus:ring-2 focus:ring-[hsl(142,100%,70%)] focus:outline-none"
-          placeholder="Enter projected resale value"
-        />
-        <div className="space-y-4">
-          <div>
-            <div className="font-semibold">Average Range</div>
-            <div className="text-lg">{averageRange}</div>
-          </div>
-          <div>
-            <div className="font-semibold">Premium Range</div>
-            <div className="text-lg">{premiumRange}</div>
-          </div>
-          <div>
-            <div className="font-semibold">Niche / Oversized Range</div>
-            <div className="text-lg">{nicheRange}</div>
-          </div>
-          <div>
-            <div className="font-semibold">Checkout Range</div>
-            <div className="text-lg">{checkoutRange}</div>
+      <div className="flex w-full max-w-6xl flex-col gap-8 rounded-xl bg-white/10 p-6 shadow-lg md:flex-row">
+        <div className="flex w-full flex-col justify-start md:w-1/3">
+          <h1 className="mb-6 text-center text-3xl font-bold md:text-left">
+            Quote Calculator
+          </h1>
+          <label className="mb-2 block font-medium">
+            Projected Resale Value ($)
+          </label>
+          <input
+            type="number"
+            min={0}
+            value={input}
+            onChange={(e) => {
+              setInput(e.target.value);
+              setProjection(Number(e.target.value));
+            }}
+            className="mb-6 w-full rounded-lg bg-white/20 px-4 py-2 text-white placeholder-white/60 focus:ring-2 focus:ring-[hsl(142,100%,70%)] focus:outline-none"
+            placeholder="Enter projected resale value"
+          />
+          <div className="space-y-4">
+            <div>
+              <div className="font-semibold">Average Range</div>
+              <div className="text-lg">{averageRange}</div>
+            </div>
+            <div>
+              <div className="font-semibold">Premium Range</div>
+              <div className="text-lg">{premiumRange}</div>
+            </div>
+            <div>
+              <div className="font-semibold">Niche / Oversized Range</div>
+              <div className="text-lg">{nicheRange}</div>
+            </div>
+            <div>
+              <div className="font-semibold">Checkout Range</div>
+              <div className="text-lg">{checkoutRange}</div>
+            </div>
           </div>
         </div>
-      </div>
-      <div className="w-full max-w-4xl overflow-x-auto rounded-xl bg-white/10 p-4 shadow-lg">
-        <h2 className="mb-4 text-center text-2xl font-bold">
-          Console Quotes Reference
-        </h2>
-        <table className="min-w-full text-left text-white">
-          <thead>
-            <tr className="border-b border-white/20">
-              <th className="px-3 py-2">Console</th>
-              <th className="px-3 py-2">Quote</th>
-              <th className="px-3 py-2">Sell Price (Console Only)</th>
-              <th className="px-3 py-2">Sell Price (Complete)</th>
-            </tr>
-          </thead>
-          <tbody>
+        <div className="mx-2 hidden w-px bg-white/20 md:block" />
+        <div className="w-full md:w-2/3">
+          <div className="mb-4 flex flex-wrap items-center justify-between gap-2">
+            <h2 className="text-center text-2xl font-bold md:text-left">
+              Console Quotes Reference
+            </h2>
+            <div className="flex items-center gap-3">
+              <span className="flex items-center gap-1 rounded-full bg-white/10 px-3 py-1 text-xs font-semibold text-white/80 shadow-sm">
+                <Calendar className="h-4 w-4 text-white/60" />
+                Last Updated: <span className="text-white">5/30</span>
+              </span>
+              <button
+                type="button"
+                aria-label="Why were prices updated?"
+                className="relative flex items-center justify-center rounded-full bg-white/10 p-1 hover:bg-white/20"
+                onClick={() => setShowInfo((v) => !v)}
+              >
+                <Info className="h-4 w-4 text-white/80" />
+                {showInfo && (
+                  <span className="absolute top-full right-0 z-10 mt-2 w-64 rounded bg-black/90 px-4 py-2 text-xs text-white shadow-lg">
+                    Prices were updated to reflect current market trends and
+                    recent sales data. This ensures your quotes are as accurate
+                    as possible.
+                  </span>
+                )}
+              </button>
+            </div>
+          </div>
+          <div className="space-y-8">
             {brandSections.map((section) => (
-              <>
-                <tr key={section.name}>
-                  <td
-                    colSpan={4}
-                    className="pt-6 pb-2 text-lg font-bold text-white/90"
-                  >
-                    {section.icon}
-                    {section.name}
-                  </td>
-                </tr>
-                {consoleQuotes
-                  .filter((row) => row.brand === section.name)
-                  .map((row, i) => (
-                    <tr
-                      key={row.console}
-                      className="border-b border-white/10 hover:bg-white/5"
-                    >
-                      <td className="px-3 py-2 whitespace-nowrap">
-                        {row.console}
-                      </td>
-                      <td className="px-3 py-2 whitespace-nowrap">
-                        {row.quote}
-                      </td>
-                      <td className="px-3 py-2 whitespace-nowrap">
-                        {row.sellPrice}
-                      </td>
-                      <td className="px-3 py-2 whitespace-nowrap">
-                        {row.complete}
-                      </td>
-                    </tr>
-                  ))}
-              </>
+              <table
+                key={section.name}
+                className="min-w-full overflow-hidden rounded-xl bg-white/5 text-left text-white shadow-lg"
+              >
+                <thead>
+                  <tr className="border-b border-white/20">
+                    <th className="px-3 py-2 font-semibold text-white/90">
+                      {section.icon}
+                      {section.name}
+                    </th>
+                    <th className="px-3 py-2 font-semibold text-white/70">
+                      Quote
+                    </th>
+                    <th className="px-3 py-2 font-semibold text-white/70">
+                      Sell Price (Console Only)
+                    </th>
+                    <th className="px-3 py-2 font-semibold text-white/70">
+                      Sell Price (Complete)
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {consoleQuotes
+                    .filter((row) => row.brand === section.name)
+                    .map((row, i) => (
+                      <tr
+                        key={row.console}
+                        className="border-b border-white/10 odd:bg-white/10 even:bg-white/5 hover:bg-white/20"
+                      >
+                        <td className="px-3 py-2 whitespace-nowrap">
+                          {row.console}
+                        </td>
+                        <td className="px-3 py-2 whitespace-nowrap">
+                          {row.quote}
+                        </td>
+                        <td className="px-3 py-2 whitespace-nowrap">
+                          {row.sellPrice}
+                        </td>
+                        <td className="px-3 py-2 whitespace-nowrap">
+                          {row.complete}
+                        </td>
+                      </tr>
+                    ))}
+                </tbody>
+              </table>
             ))}
-          </tbody>
-        </table>
+          </div>
+        </div>
       </div>
     </div>
   );

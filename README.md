@@ -9,4 +9,14 @@ Listing tools that to improve efficiency and productivity.
 [ ] - PriceCharting API would be easier route, however has $45/mo price tag attached to it.
 [ ] -
 
-## Notes
+## Pricing Agent
+
+AI Agent that runs in a browser to fetch market prices from live website data.
+
+## Warranty Lookup Agent
+
+AI Agent that runs in a browser to check if a device has or is eligble for warranty.
+
+## ESN/MDM/iCloud/Blocking Agent
+
+## TODO
