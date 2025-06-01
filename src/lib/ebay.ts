@@ -109,7 +109,8 @@ export class EbayService {
     } catch (error) {
       if (
         axios.isAxiosError(error) &&
-        error.response?.status >= 500 &&
+        typeof error.response?.status === "number" &&
+        error.response.status >= 500 &&
         this.retryCount < this.MAX_RETRIES
       ) {
         this.retryCount++;
