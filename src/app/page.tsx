@@ -7,11 +7,11 @@ export default function HomePage() {
     <main className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-[#1a472a] to-[#0a0a0a] text-white">
       <div className="container flex flex-col items-center justify-center gap-12 px-4 py-16">
         <h1 className="text-5xl font-extrabold tracking-tight text-white sm:text-[5rem]">
-          Welcome{" "}
+          Welcome to{" "}
           <span className="cookie text-[8rem] text-[hsl(142,100%,70%)]">
             Scout
           </span>
-          , your new <span className="text-[hsl(142,100%,70%)]">AI</span> Lister
+          , listing made easy.{" "}
         </h1>
         <div className="flex w-full max-w-3xl flex-wrap items-center justify-center gap-4">
           <NavButton href="/video-game-lots">

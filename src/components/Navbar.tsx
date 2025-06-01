@@ -21,27 +21,27 @@ export default function Navbar() {
         </Link>
 
         <div className="flex items-center gap-4">
-          <NavButton href="/video-game-lots" className="px-4 py-2">
-            <Joystick className="h-5 w-5 transition-colors duration-200 group-hover:text-black" />
-            <span className="font-semibold transition-colors duration-200 group-hover:text-black">
+          <NavButton href="/video-game-lots" size="sm">
+            <Joystick className="h-4 w-4 transition-colors duration-200 group-hover:text-black" />
+            <span className="font-medium transition-colors duration-200 group-hover:text-black">
               Video Game Lots
             </span>
           </NavButton>
-          <NavButton href="/quotes" className="px-4 py-2">
-            <DollarSign className="h-5 w-5 transition-colors duration-200 group-hover:text-black" />
-            <span className="font-semibold transition-colors duration-200 group-hover:text-black">
+          <NavButton href="/quotes" size="sm">
+            <DollarSign className="h-4 w-4 transition-colors duration-200 group-hover:text-black" />
+            <span className="font-medium transition-colors duration-200 group-hover:text-black">
               Quotes
             </span>
           </NavButton>
-          <NavButton href="/spec-finder" className="px-4 py-2">
-            <Search className="h-5 w-5 transition-colors duration-200 group-hover:text-black" />
-            <span className="font-semibold transition-colors duration-200 group-hover:text-black">
+          <NavButton href="/spec-finder" size="sm">
+            <Search className="h-4 w-4 transition-colors duration-200 group-hover:text-black" />
+            <span className="font-medium transition-colors duration-200 group-hover:text-black">
               Spec Finder
             </span>
           </NavButton>
-          <NavButton href="/upc-lookup" className="px-4 py-2">
-            <QrCode className="h-5 w-5 transition-colors duration-200 group-hover:text-black" />
-            <span className="font-semibold transition-colors duration-200 group-hover:text-black">
+          <NavButton href="/upc-lookup" size="sm">
+            <QrCode className="h-4 w-4 transition-colors duration-200 group-hover:text-black" />
+            <span className="font-medium transition-colors duration-200 group-hover:text-black">
               UPC Lookup
             </span>
           </NavButton>
