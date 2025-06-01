@@ -1,7 +1,19 @@
 "use client";
 
 import { useState } from "react";
-import { Monitor, Disc, Gamepad2, Laptop, Info, Calendar } from "lucide-react";
+import {
+  Monitor,
+  Disc,
+  Gamepad2,
+  Laptop,
+  Info,
+  Calendar,
+  Calculator,
+  BarChart2,
+  Star,
+  Package,
+  ShoppingCart,
+} from "lucide-react";
 
 function floorTo5(num: number) {
   return Math.floor(num / 5) * 5;
@@ -355,6 +367,33 @@ const brandSections = [
   },
 ];
 
+const previousQuotes = [
+  {
+    date: "5/30/2025",
+    device: "iPhone 15 Plus",
+    value: "$500",
+    range: "$225 - $325",
+  },
+  {
+    date: "5/29/2025",
+    device: "PS5 Slim Disc",
+    value: "$350",
+    range: "$175 - $210",
+  },
+  {
+    date: "5/29/2025",
+    device: "Gaming PC",
+    value: "$1,160",
+    range: "$600 - $750",
+  },
+  {
+    date: "5/30/2025",
+    device: "NEW PS5 Slim Disc",
+    value: "$430",
+    range: "$210 - $250",
+  },
+];
+
 export default function QuotesPage() {
   const [projection, setProjection] = useState(0);
   const [input, setInput] = useState("");
@@ -378,39 +417,82 @@ export default function QuotesPage() {
     <div className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-[#1a472a] to-[#0a0a0a] px-4 py-16 text-white">
       <div className="flex w-full max-w-6xl flex-col gap-8 rounded-xl bg-white/10 p-6 shadow-lg md:flex-row">
         <div className="flex w-full flex-col justify-start md:w-1/3">
-          <h1 className="mb-6 text-center text-3xl font-bold md:text-left">
-            Quote Calculator
-          </h1>
-          <label className="mb-2 block font-medium">
-            Projected Resale Value ($)
-          </label>
-          <input
-            type="number"
-            min={0}
-            value={input}
-            onChange={(e) => {
-              setInput(e.target.value);
-              setProjection(Number(e.target.value));
-            }}
-            className="mb-6 w-full rounded-lg bg-white/20 px-4 py-2 text-white placeholder-white/60 focus:ring-2 focus:ring-[hsl(142,100%,70%)] focus:outline-none"
-            placeholder="Enter projected resale value"
-          />
-          <div className="space-y-4">
-            <div>
-              <div className="font-semibold">Average Range</div>
-              <div className="text-lg">{averageRange}</div>
+          <div className="mb-6 rounded-xl bg-white/10 p-6 shadow-lg">
+            <div className="mb-4 flex items-center gap-2">
+              <Calculator className="h-6 w-6 text-[hsl(142,100%,70%)]" />
+              <h1 className="text-2xl font-bold">Quote Calculator</h1>
             </div>
-            <div>
-              <div className="font-semibold">Premium Range</div>
-              <div className="text-lg">{premiumRange}</div>
+            <label className="mb-2 block font-medium">
+              Projected Resale Value ($)
+            </label>
+            <input
+              type="number"
+              min={0}
+              value={input}
+              onChange={(e) => {
+                setInput(e.target.value);
+                setProjection(Number(e.target.value));
+              }}
+              className="mb-6 w-full rounded-lg bg-white/20 px-4 py-2 text-white placeholder-white/60 focus:ring-2 focus:ring-[hsl(142,100%,70%)] focus:outline-none"
+              placeholder="Enter projected resale value"
+            />
+            <div className="space-y-4">
+              <div className="flex items-center gap-2">
+                <BarChart2 className="h-5 w-5 text-emerald-300" />
+                <div>
+                  <div className="font-semibold">Average Range</div>
+                  <div className="text-lg">{averageRange}</div>
+                </div>
+              </div>
+              <div className="flex items-center gap-2">
+                <Star className="h-5 w-5 text-yellow-300" />
+                <div>
+                  <div className="font-semibold">Premium Range</div>
+                  <div className="text-lg">{premiumRange}</div>
+                </div>
+              </div>
+              <div className="flex items-center gap-2">
+                <Package className="h-5 w-5 text-blue-300" />
+                <div>
+                  <div className="font-semibold">Niche / Oversized Range</div>
+                  <div className="text-lg">{nicheRange}</div>
+                </div>
+              </div>
+              <div className="flex items-center gap-2">
+                <ShoppingCart className="h-5 w-5 text-pink-300" />
+                <div>
+                  <div className="font-semibold">Checkout Range</div>
+                  <div className="text-lg">{checkoutRange}</div>
+                </div>
+              </div>
             </div>
-            <div>
-              <div className="font-semibold">Niche / Oversized Range</div>
-              <div className="text-lg">{nicheRange}</div>
+          </div>
+          <div className="border-t border-white/10 pt-6">
+            <div className="mb-2 flex items-center gap-2">
+              <span className="text-sm font-semibold text-white/80">
+                Previous Quotes
+              </span>
             </div>
-            <div>
-              <div className="font-semibold">Checkout Range</div>
-              <div className="text-lg">{checkoutRange}</div>
+            <div className="flex flex-col gap-3">
+              {previousQuotes.map((q, i) => (
+                <div
+                  key={i}
+                  className="flex flex-col gap-1 rounded-lg bg-white/10 px-4 py-3 shadow-sm transition hover:bg-white/20"
+                >
+                  <div className="flex items-center justify-between text-xs text-white/70">
+                    <span>{q.date}</span>
+                    <span className="font-semibold text-white/90">
+                      {q.device}
+                    </span>
+                  </div>
+                  <div className="mt-1 flex items-center gap-4">
+                    <span className="font-bold text-emerald-300">
+                      {q.value}
+                    </span>
+                    <span className="text-white/80">{q.range}</span>
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
         </div>
@@ -428,7 +510,7 @@ export default function QuotesPage() {
               <button
                 type="button"
                 aria-label="Why were prices updated?"
-                className="relative flex items-center justify-center rounded-full bg-white/10 p-1 hover:bg-white/20"
+                className="relative flex cursor-pointer items-center justify-center rounded-full bg-white/10 p-1 hover:bg-white/20"
                 onClick={() => setShowInfo((v) => !v)}
               >
                 <Info className="h-4 w-4 text-white/80" />
