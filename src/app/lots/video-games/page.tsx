@@ -15,7 +15,8 @@ export default function VideoGamesPage() {
           >
             <h3 className="text-3xl font-bold">Create New Lot →</h3>
             <div className="text-xl">
-              Start creating a new video game lot with Scout's AI assistance.
+              Start creating a new video game lot with Scout&apos;s AI
+              assistance.
             </div>
           </Link>
 
