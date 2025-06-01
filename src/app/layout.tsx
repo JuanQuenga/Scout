@@ -2,6 +2,7 @@ import "~/styles/globals.css";
 
 import { type Metadata } from "next";
 import { Geist } from "next/font/google";
+import Navbar from "~/components/Navbar";
 
 export const metadata: Metadata = {
   title: "Scout AI",
@@ -27,7 +28,10 @@ export default function RootLayout({
           rel="stylesheet"
         />
       </head>
-      <body>{children}</body>
+      <body className="min-h-screen bg-gradient-to-b from-[#1a472a] to-[#0a0a0a] text-white">
+        <Navbar />
+        <div className="pt-16">{children}</div>
+      </body>
     </html>
   );
 }
