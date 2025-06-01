@@ -12,6 +12,9 @@ export interface GamePrice {
 
 export async function searchGamePrices(query: string): Promise<GamePrice[]> {
   try {
+    const url = `https://www.pricecharting.com/search-products?q=${encodeURIComponent(query)}&type=prices`;
+    console.log(url);
+
     const response = await axios.get<string>(
       `https://www.pricecharting.com/search?q=${encodeURIComponent(query)}`,
       {
