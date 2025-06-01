@@ -1,6 +1,6 @@
 # Scout AI
 
-Listing tools that leverage AI to improve efficiency and productivity.
+Listing tools that to improve efficiency and productivity.
 
 ## TODO
 
