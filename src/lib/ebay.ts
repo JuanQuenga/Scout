@@ -1,8 +1,7 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
 import axios from "axios";
-import EbayAuthToken, {
-  type EbayAuthTokenOptions,
-  type EbayEnvironment,
-} from "ebay-oauth-nodejs-client";
+import EbayAuthToken from "ebay-oauth-nodejs-client";
 
 export interface EbayPrice {
   value: number;
@@ -85,7 +84,7 @@ export class EbayService {
       clientId: config.clientId,
       clientSecret: config.clientSecret,
       env: config.env,
-    } as EbayAuthTokenOptions);
+    });
   }
 
   private async getAccessToken(): Promise<string> {
@@ -94,8 +93,9 @@ export class EbayService {
     }
 
     try {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
       const token = (await this.oauthClient.getApplicationToken(
-        this.config.env as EbayEnvironment,
+        this.config.env,
       )) as unknown as OAuthToken;
       this.accessToken = token.access_token;
       this.tokenExpiry = Date.now() + token.expires_in * 1000;
@@ -168,6 +168,7 @@ export class EbayService {
       console.error("Error searching eBay:", error);
       if (axios.isAxiosError(error)) {
         throw new Error(
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
           `eBay API error: ${error.response?.data?.message ?? error.message}`,
         );
       }
