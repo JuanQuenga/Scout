@@ -1,5 +1,8 @@
 import axios from "axios";
-import EbayAuthToken from "ebay-oauth-nodejs-client";
+import EbayAuthToken, {
+  type EbayAuthTokenOptions,
+  type EbayEnvironment,
+} from "ebay-oauth-nodejs-client";
 
 export interface EbayPrice {
   value: number;
@@ -82,7 +85,7 @@ export class EbayService {
       clientId: config.clientId,
       clientSecret: config.clientSecret,
       env: config.env,
-    });
+    } as EbayAuthTokenOptions);
   }
 
   private async getAccessToken(): Promise<string> {
@@ -92,7 +95,7 @@ export class EbayService {
 
     try {
       const token = (await this.oauthClient.getApplicationToken(
-        this.config.env,
+        this.config.env as EbayEnvironment,
       )) as unknown as OAuthToken;
       this.accessToken = token.access_token;
       this.tokenExpiry = Date.now() + token.expires_in * 1000;
@@ -165,7 +168,7 @@ export class EbayService {
       console.error("Error searching eBay:", error);
       if (axios.isAxiosError(error)) {
         throw new Error(
-          `eBay API error: ${error.response?.data?.message || error.message}`,
+          `eBay API error: ${error.response?.data?.message ?? error.message}`,
         );
       }
       throw error;
