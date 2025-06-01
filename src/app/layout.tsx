@@ -5,8 +5,8 @@ import { Geist } from "next/font/google";
 import Navbar from "~/components/Navbar";
 
 export const metadata: Metadata = {
-  title: "Scout AI",
-  description: "AI Auto-Listing Assistant",
+  title: "Scout",
+  description: "Premium Listing Tools",
   icons: [{ rel: "icon", url: "/favicon.ico" }],
 };
 
