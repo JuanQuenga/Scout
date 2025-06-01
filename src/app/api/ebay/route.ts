@@ -4,6 +4,7 @@ import { EbayService } from "~/lib/ebay";
 const ebayService = new EbayService({
   clientId: process.env.EBAY_CLIENT_ID ?? "",
   clientSecret: process.env.EBAY_CLIENT_SECRET ?? "",
+  env: (process.env.EBAY_ENV as "PRODUCTION" | "SANDBOX") ?? "SANDBOX",
 });
 
 export async function GET(request: Request) {
