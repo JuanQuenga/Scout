@@ -2,6 +2,8 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { Joystick, DollarSign, Search, QrCode } from "lucide-react";
+import NavButton from "./NavButton";
 
 export default function Navbar() {
   const pathname = usePathname();
@@ -18,20 +20,31 @@ export default function Navbar() {
           Scout
         </Link>
 
-        <div className="flex items-center gap-8">
-          <Link
-            href="/lots/video-games"
-            className="rounded-lg bg-white/10 px-4 py-2 text-white/70 transition-all duration-200 hover:bg-white/20 hover:text-white"
-          >
-            Video Games
-          </Link>
-          <Link
-            href="https://github.com/JuanQuenga/Scout"
-            target="_blank"
-            className="rounded-lg bg-white/10 px-4 py-2 text-white/70 transition-all duration-200 hover:bg-white/20 hover:text-white"
-          >
-            GitHub
-          </Link>
+        <div className="flex items-center gap-4">
+          <NavButton href="/video-game-lots" className="px-4 py-2">
+            <Joystick className="h-5 w-5 transition-colors duration-200 group-hover:text-black" />
+            <span className="font-semibold transition-colors duration-200 group-hover:text-black">
+              Video Game Lots
+            </span>
+          </NavButton>
+          <NavButton href="/quotes" className="px-4 py-2">
+            <DollarSign className="h-5 w-5 transition-colors duration-200 group-hover:text-black" />
+            <span className="font-semibold transition-colors duration-200 group-hover:text-black">
+              Quotes
+            </span>
+          </NavButton>
+          <NavButton href="/spec-finder" className="px-4 py-2">
+            <Search className="h-5 w-5 transition-colors duration-200 group-hover:text-black" />
+            <span className="font-semibold transition-colors duration-200 group-hover:text-black">
+              Spec Finder
+            </span>
+          </NavButton>
+          <NavButton href="/upc-lookup" className="px-4 py-2">
+            <QrCode className="h-5 w-5 transition-colors duration-200 group-hover:text-black" />
+            <span className="font-semibold transition-colors duration-200 group-hover:text-black">
+              UPC Lookup
+            </span>
+          </NavButton>
         </div>
       </div>
     </div>
