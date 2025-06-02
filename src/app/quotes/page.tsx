@@ -72,6 +72,7 @@ export default function QuotesPage() {
   const [projection, setProjection] = useState(0);
   const [input, setInput] = useState("");
   const [showInfo, setShowInfo] = useState(false);
+  const [showCalculatorInfo, setShowCalculatorInfo] = useState(false);
   const [openInfo, setOpenInfo] = useState<string | null>(null);
 
   // Calculate ranges based on the Google Sheet logic
@@ -82,12 +83,67 @@ export default function QuotesPage() {
 
   return (
     <div className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-[#1a472a] to-[#0a0a0a] px-4 py-16 text-white">
-      <div className="flex w-full max-w-6xl flex-col gap-4 rounded-xl bg-white/10 p-6 shadow-lg md:flex-row">
+      <div className="flex w-full max-w-7xl flex-col gap-4 rounded-xl bg-white/10 p-6 shadow-lg md:flex-row">
         <div className="flex w-full flex-col justify-start md:w-1/3">
           <div className="mb-6 rounded-xl bg-white/10 p-6 shadow-lg">
-            <div className="mb-4 flex items-center gap-2">
-              <Calculator className="h-6 w-6 text-[hsl(142,100%,70%)]" />
-              <h1 className="text-2xl font-bold">Quote Calculator</h1>
+            <div className="mb-4 flex items-center justify-between gap-2">
+              <div className="flex items-center gap-2">
+                <Calculator className="h-6 w-6 text-[hsl(142,100%,70%)]" />
+                <h1 className="text-2xl font-bold">Quote Calculator</h1>
+              </div>
+              <div className="relative">
+                <button
+                  type="button"
+                  aria-label="Info about calculator ranges"
+                  className="flex cursor-pointer items-center justify-center rounded-full bg-white/10 p-1.5 hover:bg-white/20"
+                  onClick={() => setShowCalculatorInfo((prev) => !prev)}
+                >
+                  <Info className="h-5 w-5 text-white/80" />
+                </button>
+                {showCalculatorInfo && (
+                  <div className="absolute top-full right-0 z-20 mt-2 w-80 rounded-lg bg-slate-800 p-4 text-sm text-white shadow-xl">
+                    <h3 className="mb-2 text-base font-semibold text-[hsl(142,100%,70%)]">
+                      Range Explanations:
+                    </h3>
+                    <div className="mb-2 space-y-0.5">
+                      <p className="font-medium text-white/90">
+                        Average Range:
+                      </p>
+                      <p className="text-xs text-white/70">
+                        Typical offer for most items (45-55% of projection,
+                        floored to $5).
+                      </p>
+                    </div>
+                    <div className="mb-2 space-y-0.5">
+                      <p className="font-medium text-white/90">
+                        Premium Range:
+                      </p>
+                      <p className="text-xs text-white/70">
+                        For high-demand/premium items (55-65% of projection,
+                        floored to $5).
+                      </p>
+                    </div>
+                    <div className="mb-2 space-y-0.5">
+                      <p className="font-medium text-white/90">
+                        Niche / Oversized Range:
+                      </p>
+                      <p className="text-xs text-white/70">
+                        For niche, oversized, or harder-to-sell items (30-40% of
+                        projection, floored to $5).
+                      </p>
+                    </div>
+                    <div className="space-y-0.5">
+                      <p className="font-medium text-white/90">
+                        Checkout Range:
+                      </p>
+                      <p className="text-xs text-white/70">
+                        For items to move quickly or at checkout (40-60% of
+                        projection, floored to $5).
+                      </p>
+                    </div>
+                  </div>
+                )}
+              </div>
             </div>
             <label className="mb-2 block font-medium">
               Projected Resale Value ($)
@@ -104,98 +160,33 @@ export default function QuotesPage() {
               placeholder="Enter projected resale value"
             />
             <div className="space-y-4">
-              <div className="flex items-center gap-2">
-                <BarChart2 className="h-5 w-5 text-emerald-300" />
-                <div className="flex items-center gap-1">
-                  <div className="font-semibold">Average Range</div>
-                  <button
-                    type="button"
-                    aria-label="Info: Average Range"
-                    className="relative flex cursor-pointer items-center justify-center rounded-full bg-white/10 p-1 hover:bg-white/20"
-                    onClick={() =>
-                      setOpenInfo(openInfo === "average" ? null : "average")
-                    }
-                  >
-                    <Info className="h-4 w-4 text-white/80" />
-                    {openInfo === "average" && (
-                      <span className="absolute top-1/2 left-full z-10 ml-2 w-64 -translate-y-1/2 rounded bg-black/90 px-4 py-2 text-xs text-white shadow-lg">
-                        This is the typical range you might offer for most items
-                        (45% to 55% of the projection, floored to $5).
-                      </span>
-                    )}
-                  </button>
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-1.5">
+                  <BarChart2 className="h-5 w-5 shrink-0 text-emerald-300" />
+                  <span className="font-semibold">Average Range</span>
                 </div>
-                <div className="text-xl">{averageRange}</div>
+                <div className="text-lg font-medium">{averageRange}</div>
               </div>
-              <div className="flex items-center gap-2">
-                <Star className="h-5 w-5 text-yellow-300" />
-                <div className="flex items-center gap-1">
-                  <div className="font-semibold">Premium Range</div>
-                  <button
-                    type="button"
-                    aria-label="Info: Premium Range"
-                    className="relative flex cursor-pointer items-center justify-center rounded-full bg-white/10 p-1 hover:bg-white/20"
-                    onClick={() =>
-                      setOpenInfo(openInfo === "premium" ? null : "premium")
-                    }
-                  >
-                    <Info className="h-4 w-4 text-white/80" />
-                    {openInfo === "premium" && (
-                      <span className="absolute top-1/2 left-full z-10 ml-2 w-64 -translate-y-1/2 rounded bg-black/90 px-4 py-2 text-xs text-white shadow-lg">
-                        Use this for high-demand or premium items (55% to 65% of
-                        the projection, floored to $5).
-                      </span>
-                    )}
-                  </button>
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-1.5">
+                  <Star className="h-5 w-5 shrink-0 text-yellow-300" />
+                  <span className="font-semibold">Premium Range</span>
                 </div>
-                <div className="text-lg">{premiumRange}</div>
+                <div className="text-lg font-medium">{premiumRange}</div>
               </div>
-              <div className="flex items-center gap-2">
-                <Package className="h-5 w-5 text-blue-300" />
-                <div className="flex items-center gap-1">
-                  <div className="font-semibold">Niche / Oversized Range</div>
-                  <button
-                    type="button"
-                    aria-label="Info: Niche/Oversized Range"
-                    className="relative flex cursor-pointer items-center justify-center rounded-full bg-white/10 p-1 hover:bg-white/20"
-                    onClick={() =>
-                      setOpenInfo(openInfo === "niche" ? null : "niche")
-                    }
-                  >
-                    <Info className="h-4 w-4 text-white/80" />
-                    {openInfo === "niche" && (
-                      <span className="absolute top-1/2 left-full z-10 ml-2 w-64 -translate-y-1/2 rounded bg-black/90 px-4 py-2 text-xs text-white shadow-lg">
-                        Use this for niche, oversized, or harder-to-sell items
-                        (30% to 40% of the projection, floored to $5).
-                      </span>
-                    )}
-                  </button>
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-1.5">
+                  <Package className="h-5 w-5 shrink-0 text-blue-300" />
+                  <span className="font-semibold">Niche / Oversized Range</span>
                 </div>
-                <div className="text-lg">{nicheRange}</div>
+                <div className="text-lg font-medium">{nicheRange}</div>
               </div>
-              <div className="flex items-center gap-2">
-                <ShoppingCart className="h-5 w-5 text-pink-300" />
-                <div className="flex items-center gap-1">
-                  <div className="font-semibold">Checkout Range</div>
-                  <button
-                    type="button"
-                    aria-label="Info: Checkout Range"
-                    className="relative flex cursor-pointer items-center justify-center rounded-full bg-white/10 p-1 hover:bg-white/20"
-                    onClick={() =>
-                      setOpenInfo(openInfo === "checkout" ? null : "checkout")
-                    }
-                  >
-                    <Info className="h-4 w-4 text-white/80" />
-                    {openInfo === "checkout" && (
-                      <span className="absolute top-1/2 left-full z-10 ml-2 w-64 -translate-y-1/2 rounded bg-black/90 px-4 py-2 text-xs text-white shadow-lg">
-                        Use this for items that are being checked out or need to
-                        move quickly (40% to 60% of the projection, floored to
-                        $5).
-                      </span>
-                    )}
-                  </button>
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-1.5">
+                  <ShoppingCart className="h-5 w-5 shrink-0 text-pink-300" />
+                  <span className="font-semibold">Checkout Range</span>
                 </div>
-                <div className="text-lg">{checkoutRange}</div>
+                <div className="text-lg font-medium">{checkoutRange}</div>
               </div>
             </div>
           </div>
