@@ -10,6 +10,7 @@ import {
   Wrench,
   QrCode,
   X as XIcon,
+  PackageSearch,
 } from "lucide-react";
 import React from "react";
 
@@ -22,6 +23,11 @@ interface NavLinkItem {
 const navLinks: NavLinkItem[] = [
   { href: "/", icon: <LayoutDashboard className="h-5 w-5" />, text: "Home" },
   { href: "/quotes", icon: <DollarSign className="h-5 w-5" />, text: "Quotes" },
+  {
+    href: "/inventory",
+    icon: <PackageSearch className="h-5 w-5" />,
+    text: "Inventory",
+  },
   { href: "/insights", icon: <Search className="h-5 w-5" />, text: "Insights" },
   {
     href: "/video-game-lots",
