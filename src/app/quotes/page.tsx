@@ -126,6 +126,17 @@ export default function QuotesPage() {
   const [openInfo, setOpenInfo] = useState<string | null>(null);
 
   // Calculate ranges based on the Google Sheet logic
+  function formatRange(range: string, color: string) {
+    if (typeof range !== "string" || !range.includes("to"))
+      return <span className={color + " font-bold"}>{range}</span>;
+    const [min, max] = range.split("to").map((s) => s.trim());
+    return (
+      <span className={color + " font-bold"}>
+        {min} <span className="font-normal text-white/80">-</span> {max}
+      </span>
+    );
+  }
+
   const averageRange = projection ? getAverageRange(projection) : "-";
   const premiumRange = projection ? getPremiumRange(projection) : "-";
   const nicheRange = projection ? getNicheRange(projection) : "-";
@@ -220,7 +231,7 @@ export default function QuotesPage() {
                   </span>
                 </div>
                 <div className="text-base font-medium sm:text-lg">
-                  {averageRange}
+                  {formatRange(averageRange, "text-emerald-300")}
                 </div>
               </div>
               <div className="flex items-center justify-between">
@@ -231,7 +242,7 @@ export default function QuotesPage() {
                   </span>
                 </div>
                 <div className="text-base font-medium sm:text-lg">
-                  {premiumRange}
+                  {formatRange(premiumRange, "text-yellow-300")}
                 </div>
               </div>
               <div className="flex items-center justify-between">
@@ -242,7 +253,7 @@ export default function QuotesPage() {
                   </span>
                 </div>
                 <div className="text-base font-medium sm:text-lg">
-                  {nicheRange}
+                  {formatRange(nicheRange, "text-blue-300")}
                 </div>
               </div>
               <div className="flex items-center justify-between">
@@ -253,7 +264,7 @@ export default function QuotesPage() {
                   </span>
                 </div>
                 <div className="text-base font-medium sm:text-lg">
-                  {checkoutRange}
+                  {formatRange(checkoutRange, "text-pink-300")}
                 </div>
               </div>
             </div>

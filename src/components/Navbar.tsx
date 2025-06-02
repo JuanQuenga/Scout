@@ -34,9 +34,9 @@ export default function Navbar() {
       text: "Quotes",
     },
     {
-      href: "/spec-finder",
+      href: "/insights",
       icon: <Search className="h-4 w-4" />,
-      text: "Spec Finder",
+      text: "Insights",
     },
     {
       href: "/upc-lookup",
