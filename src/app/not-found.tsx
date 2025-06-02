@@ -11,7 +11,8 @@ export default function NotFound() {
         <h1 className="text-6xl font-extrabold tracking-tight">404</h1>
         <h2 className="text-2xl font-bold">Page Not Found</h2>
         <p className="max-w-md text-center text-lg text-white/80">
-          Oops! This page is more lost than a joystick in a couch cushion.
+          404 Error: This page seems to have cashed out! Maybe it went to
+          PayMore Southgate to get top dollar?
           <br />
           But don&apos;t worry, you can still find your way back to
           civilization!
