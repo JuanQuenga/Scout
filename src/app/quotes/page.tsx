@@ -169,39 +169,29 @@ export default function QuotesPage() {
                       Range Explanations:
                     </h3>
                     <div className="mb-2 space-y-0.5">
-                      <p className="font-medium text-white/90">
-                        Average Range:
-                      </p>
+                      <p className="font-medium text-white/90">Average:</p>
                       <p className="text-xs text-white/70">
-                        Typical offer for most items (45-55% of projection,
-                        floored to $5).
+                        Profit Margin: 45-55%
+                      </p>
+                    </div>
+                    <div className="mb-2 space-y-0.5">
+                      <p className="font-medium text-white/90">Premium:</p>
+                      <p className="text-xs text-white/70">
+                        Profit Margin: 55-65%
                       </p>
                     </div>
                     <div className="mb-2 space-y-0.5">
                       <p className="font-medium text-white/90">
-                        Premium Range:
+                        Niche / Oversized:
                       </p>
                       <p className="text-xs text-white/70">
-                        For high-demand/premium items (55-65% of projection,
-                        floored to $5).
-                      </p>
-                    </div>
-                    <div className="mb-2 space-y-0.5">
-                      <p className="font-medium text-white/90">
-                        Niche / Oversized Range:
-                      </p>
-                      <p className="text-xs text-white/70">
-                        For niche, oversized, or harder-to-sell items (30-40% of
-                        projection, floored to $5).
+                        Profit Margin: 30-40%
                       </p>
                     </div>
                     <div className="space-y-0.5">
-                      <p className="font-medium text-white/90">
-                        Checkout Range:
-                      </p>
+                      <p className="font-medium text-white/90">Checkout:</p>
                       <p className="text-xs text-white/70">
-                        For items to move quickly or at checkout (40-60% of
-                        projection, floored to $5).
+                        Profit Margin: 40-60%
                       </p>
                     </div>
                   </div>
@@ -227,7 +217,7 @@ export default function QuotesPage() {
                 <div className="flex items-center gap-1.5">
                   <BarChart2 className="h-5 w-5 shrink-0 text-emerald-300" />
                   <span className="text-sm font-semibold sm:text-base">
-                    Average Range
+                    Average
                   </span>
                 </div>
                 <div className="text-base font-medium sm:text-lg">
@@ -238,7 +228,7 @@ export default function QuotesPage() {
                 <div className="flex items-center gap-1.5">
                   <Star className="h-5 w-5 shrink-0 text-yellow-300" />
                   <span className="text-sm font-semibold sm:text-base">
-                    Premium Range
+                    Premium
                   </span>
                 </div>
                 <div className="text-base font-medium sm:text-lg">
@@ -249,7 +239,7 @@ export default function QuotesPage() {
                 <div className="flex items-center gap-1.5">
                   <Package className="h-5 w-5 shrink-0 text-blue-300" />
                   <span className="text-sm font-semibold sm:text-base">
-                    Niche / Oversized Range
+                    Niche / Oversized
                   </span>
                 </div>
                 <div className="text-base font-medium sm:text-lg">
@@ -260,7 +250,7 @@ export default function QuotesPage() {
                 <div className="flex items-center gap-1.5">
                   <ShoppingCart className="h-5 w-5 shrink-0 text-pink-300" />
                   <span className="text-sm font-semibold sm:text-base">
-                    Checkout Range
+                    Checkout
                   </span>
                 </div>
                 <div className="text-base font-medium sm:text-lg">

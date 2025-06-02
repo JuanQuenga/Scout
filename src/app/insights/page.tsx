@@ -138,7 +138,8 @@ export default function InsightsPage() {
           )}
           {!loading && searched && results.length === 0 && (
             <div className="flex h-64 items-center justify-center rounded-xl bg-white/5 p-6 text-center text-white/70 shadow-lg">
-              No results found for "{query}". Try a different search term.
+              No results found for &quot;{query}&quot;. Try a different search
+              term.
             </div>
           )}
           {!loading && results.length > 0 && (
