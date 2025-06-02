@@ -43,28 +43,78 @@ const brandSections = [
 
 const previousQuotes = [
   {
-    date: "5/30/2025",
+    date: "6/02/2024",
     device: "iPhone 15 Plus",
     value: "$500",
-    range: "$225 - $325",
+    range: "$275 - $325",
+    customer: "Example",
+    specs: "Good condition, 128gb, no scratches, unlocked",
   },
   {
-    date: "5/29/2025",
+    date: "6/01/2024",
     device: "PS5 Slim Disc",
     value: "$350",
     range: "$175 - $210",
+    customer: "John Smith",
+    specs: "Perfect Condition, fully functional",
   },
   {
-    date: "5/29/2025",
+    date: "6/01/2024",
     device: "Gaming PC",
     value: "$1,160",
     range: "$600 - $750",
+    customer: "Example",
+    specs:
+      "i7-13700kf /220, 4070 Ti /750, 32GB /50, Asrock Z790-C /80, 2TB SSD /60",
   },
   {
-    date: "5/30/2025",
+    date: "5/31/2024",
     device: "NEW PS5 Slim Disc",
     value: "$430",
     range: "$210 - $250",
+    customer: "Ben",
+    specs: "FACTORY SEALED",
+  },
+  {
+    date: "5/30/2024",
+    device: "iPhone 15 Pro 256GB",
+    value: "$630",
+    range: "$345 - $405",
+    customer: "Nakaia",
+    specs: "Unlocked, very good condition",
+  },
+  {
+    date: "5/30/2024",
+    device: "PS5 Slim Disc",
+    value: "$370",
+    range: "$180 - $220",
+    customer: "N/A",
+    specs: "Very good, everything included",
+  },
+  {
+    date: "5/29/2024",
+    device: "Lenovo Ideapad Gaming",
+    value: "$180",
+    range: "$70 - $80",
+    customer: "1574420522",
+    specs: "Ryzen 5 5600 Rtx 3050 16gb ram - broken key took ssd out",
+  },
+  {
+    date: "5/28/2024",
+    device: "Gaming PC",
+    value: "$370",
+    range: "$180 - $200",
+    customer: "John Doe",
+    specs:
+      "1700xt ryzen 5 5500 - only looked at these told him could be more with other part",
+  },
+  {
+    date: "5/27/2024",
+    device: "Gaming PC",
+    value: "$930",
+    range: "$450 - $530",
+    customer: "2489895825",
+    specs: "i5-13400F, 32GB RAM, RTX 3090, 1TB SSD",
   },
 ];
 
@@ -208,12 +258,23 @@ export default function QuotesPage() {
                       {q.device}
                     </span>
                   </div>
-                  <div className="mt-1 flex items-center gap-4">
-                    <span className="font-bold text-emerald-300">
-                      {q.value}
-                    </span>
-                    <span className="text-white/80">{q.range}</span>
+                  <div className="mt-1 flex items-baseline gap-4">
+                    <div className="flex items-baseline gap-1">
+                      <span className="text-xs text-white/60">Projection:</span>
+                      <span className="font-bold text-emerald-300">
+                        {q.value}
+                      </span>
+                    </div>
+                    <div className="flex items-baseline gap-1">
+                      <span className="text-xs text-white/60">Offer:</span>
+                      <span className="text-sm text-white/80">{q.range}</span>
+                    </div>
                   </div>
+                  {q.specs && (
+                    <div className="mt-1.5 border-t border-white/10 pt-1.5 text-xs text-white/60">
+                      {q.specs}
+                    </div>
+                  )}
                 </div>
               ))}
             </div>

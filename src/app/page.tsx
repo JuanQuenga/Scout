@@ -11,7 +11,7 @@ export default function HomePage() {
           <span className="cookie text-[8rem] text-[hsl(142,100%,70%)]">
             Scout
           </span>
-          , listing made easy.{" "}
+          , PayMore made easy.{" "}
         </h1>
         <div className="flex w-full max-w-3xl flex-wrap items-center justify-center gap-4">
           <NavButton href="/video-game-lots">
