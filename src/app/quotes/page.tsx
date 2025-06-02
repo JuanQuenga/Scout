@@ -133,15 +133,17 @@ export default function QuotesPage() {
 
   return (
     <div className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-[#1a472a] to-[#0a0a0a] px-4 py-16 text-white">
-      <div className="flex w-full max-w-7xl flex-col gap-4 rounded-xl bg-white/10 p-6 shadow-lg md:flex-row">
+      <div className="flex w-full max-w-7xl flex-col gap-4 rounded-xl bg-white/10 px-4 py-6 shadow-lg sm:p-6 md:flex-row">
         <div className="flex w-full flex-col justify-start md:w-1/3">
-          <div className="mb-6 rounded-xl bg-white/10 p-6 shadow-lg">
-            <div className="mb-4 flex items-center justify-between gap-2">
+          <div className="mb-6 rounded-xl bg-white/10 p-4 shadow-lg sm:p-6">
+            <div className="mb-4 flex flex-col items-start gap-2 sm:flex-row sm:items-center sm:justify-between">
               <div className="flex items-center gap-2">
                 <Calculator className="h-6 w-6 text-[hsl(142,100%,70%)]" />
-                <h1 className="text-2xl font-bold">Quote Calculator</h1>
+                <h1 className="text-xl font-bold sm:text-2xl">
+                  Quote Calculator
+                </h1>
               </div>
-              <div className="relative">
+              <div className="relative self-end sm:self-auto">
                 <button
                   type="button"
                   aria-label="Info about calculator ranges"
@@ -209,34 +211,50 @@ export default function QuotesPage() {
               className="mb-6 w-full rounded-lg bg-white/20 px-4 py-2 text-white placeholder-white/60 focus:ring-2 focus:ring-[hsl(142,100%,70%)] focus:outline-none"
               placeholder="Enter projected resale value"
             />
-            <div className="space-y-4">
+            <div className="space-y-3 sm:space-y-4">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-1.5">
                   <BarChart2 className="h-5 w-5 shrink-0 text-emerald-300" />
-                  <span className="font-semibold">Average Range</span>
+                  <span className="text-sm font-semibold sm:text-base">
+                    Average Range
+                  </span>
                 </div>
-                <div className="text-lg font-medium">{averageRange}</div>
+                <div className="text-base font-medium sm:text-lg">
+                  {averageRange}
+                </div>
               </div>
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-1.5">
                   <Star className="h-5 w-5 shrink-0 text-yellow-300" />
-                  <span className="font-semibold">Premium Range</span>
+                  <span className="text-sm font-semibold sm:text-base">
+                    Premium Range
+                  </span>
                 </div>
-                <div className="text-lg font-medium">{premiumRange}</div>
+                <div className="text-base font-medium sm:text-lg">
+                  {premiumRange}
+                </div>
               </div>
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-1.5">
                   <Package className="h-5 w-5 shrink-0 text-blue-300" />
-                  <span className="font-semibold">Niche / Oversized Range</span>
+                  <span className="text-sm font-semibold sm:text-base">
+                    Niche / Oversized Range
+                  </span>
                 </div>
-                <div className="text-lg font-medium">{nicheRange}</div>
+                <div className="text-base font-medium sm:text-lg">
+                  {nicheRange}
+                </div>
               </div>
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-1.5">
                   <ShoppingCart className="h-5 w-5 shrink-0 text-pink-300" />
-                  <span className="font-semibold">Checkout Range</span>
+                  <span className="text-sm font-semibold sm:text-base">
+                    Checkout Range
+                  </span>
                 </div>
-                <div className="text-lg font-medium">{checkoutRange}</div>
+                <div className="text-base font-medium sm:text-lg">
+                  {checkoutRange}
+                </div>
               </div>
             </div>
           </div>
@@ -250,7 +268,7 @@ export default function QuotesPage() {
               {previousQuotes.map((q, i) => (
                 <div
                   key={i}
-                  className="flex flex-col gap-1 rounded-lg bg-white/10 px-4 py-3 shadow-sm transition hover:bg-white/20"
+                  className="flex flex-col gap-1 rounded-lg bg-white/10 px-3 py-2 shadow-sm transition hover:bg-white/20 sm:px-4 sm:py-3"
                 >
                   <div className="flex items-center justify-between text-xs text-white/70">
                     <span>{q.date}</span>
@@ -282,11 +300,11 @@ export default function QuotesPage() {
         </div>
         <div className="mx-2 hidden w-px bg-white/20 md:block" />
         <div className="w-full md:w-2/3">
-          <div className="mb-4 flex flex-wrap items-center justify-between gap-2">
-            <h2 className="text-center text-2xl font-bold md:text-left">
+          <div className="mb-4 flex flex-col items-start gap-2 sm:flex-row sm:items-center sm:justify-between">
+            <h2 className="text-xl font-bold sm:text-2xl md:text-left">
               Console Quotes Reference
             </h2>
-            <div className="flex items-center gap-3">
+            <div className="flex w-full flex-col items-start gap-2 sm:w-auto sm:flex-row sm:items-center sm:gap-3">
               <span className="flex items-center gap-1 rounded-full bg-white/10 px-3 py-1 text-xs font-semibold text-white/80 shadow-sm">
                 <Calendar className="h-4 w-4 text-white/60" />
                 Last Updated: <span className="text-white">5/30</span>
@@ -308,22 +326,22 @@ export default function QuotesPage() {
               </button>
             </div>
           </div>
-          <div className="space-y-8">
+          <div className="space-y-6 sm:space-y-8">
             {brandSections.map((section) => (
               <table
                 key={section.name}
-                className="min-w-full overflow-hidden rounded-xl bg-white/5 text-left text-white shadow-lg"
+                className="min-w-full overflow-hidden rounded-xl bg-white/5 text-left text-sm text-white shadow-lg sm:text-base"
               >
                 <thead>
                   <tr className="border-b border-white/20">
-                    <th className="px-3 py-2 font-semibold text-white/90">
+                    <th className="px-2 py-2 font-semibold text-white/90 sm:px-3">
                       {section.icon}
                       {section.name}
                     </th>
-                    <th className="px-3 py-2 font-semibold text-white/70">
+                    <th className="px-2 py-2 font-semibold text-white/70 sm:px-3">
                       Quote
                     </th>
-                    <th className="px-3 py-2 font-semibold text-white/70">
+                    <th className="px-2 py-2 font-semibold text-white/70 sm:px-3">
                       <div className="flex flex-col items-start">
                         <span>Sell Price</span>
                         <span className="text-xs font-normal text-white/50">
@@ -331,7 +349,7 @@ export default function QuotesPage() {
                         </span>
                       </div>
                     </th>
-                    <th className="px-3 py-2 font-semibold text-white/70">
+                    <th className="px-2 py-2 font-semibold text-white/70 sm:px-3">
                       <div className="flex flex-col items-start">
                         <span>Sell Price</span>
                         <span className="text-xs font-normal text-white/50">
@@ -349,16 +367,16 @@ export default function QuotesPage() {
                         key={row.console}
                         className="border-b border-white/10 odd:bg-white/10 even:bg-white/5 hover:bg-white/20"
                       >
-                        <td className="px-3 py-2 whitespace-nowrap">
+                        <td className="px-2 py-2 whitespace-nowrap sm:px-3">
                           {row.console}
                         </td>
-                        <td className="px-3 py-2 whitespace-nowrap">
+                        <td className="px-2 py-2 whitespace-nowrap sm:px-3">
                           {row.quote}
                         </td>
-                        <td className="px-3 py-2 whitespace-nowrap">
+                        <td className="px-2 py-2 whitespace-nowrap sm:px-3">
                           {row.sellPrice}
                         </td>
-                        <td className="px-3 py-2 whitespace-nowrap">
+                        <td className="px-2 py-2 whitespace-nowrap sm:px-3">
                           {row.complete}
                         </td>
                       </tr>

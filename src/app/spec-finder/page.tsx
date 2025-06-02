@@ -6,7 +6,7 @@ import { Search, Construction, Home, Joystick, QrCode } from "lucide-react";
 export default function SpecFinderComingSoonPage() {
   return (
     <div className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-[#1a472a] to-[#0a0a0a] px-4 py-16 text-white">
-      <div className="flex flex-col items-center gap-6 rounded-xl bg-white/10 p-10 text-center shadow-lg">
+      <div className="flex w-full max-w-md flex-col items-center gap-6 rounded-xl bg-white/10 px-6 py-8 text-center shadow-lg sm:p-10">
         <Construction className="mb-2 h-16 w-16 text-white/70" />
         <h1 className="text-5xl font-extrabold tracking-tight text-[hsl(142,100%,70%)]">
           Spec Finder

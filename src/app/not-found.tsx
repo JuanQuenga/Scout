@@ -6,11 +6,13 @@ import { Ghost, Home, Joystick, Search, QrCode } from "lucide-react";
 export default function NotFound() {
   return (
     <div className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-[#1a472a] to-[#0a0a0a] px-4 py-16 text-white">
-      <div className="flex flex-col items-center gap-6 rounded-xl bg-white/10 p-10 shadow-lg">
+      <div className="flex w-full max-w-md flex-col items-center gap-6 rounded-xl bg-white/10 px-6 py-8 text-center shadow-lg sm:p-10">
         <Ghost className="mb-2 h-16 w-16 text-white/70" />
-        <h1 className="text-6xl font-extrabold tracking-tight">404</h1>
-        <h2 className="text-2xl font-bold">Page Not Found</h2>
-        <p className="max-w-md text-center text-lg text-white/80">
+        <h1 className="text-4xl font-extrabold tracking-tight sm:text-6xl">
+          404
+        </h1>
+        <h2 className="text-xl font-bold sm:text-2xl">Page Not Found</h2>
+        <p className="max-w-md text-center text-base text-white/80 sm:text-lg">
           404 Error: This page seems to have cashed out! Maybe it went to
           PayMore Southgate to get top dollar?
           <br />

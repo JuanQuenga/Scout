@@ -4,7 +4,7 @@ import NavButton from "../components/NavButton";
 
 export default function HomePage() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-[#1a472a] to-[#0a0a0a] text-white">
+    <main className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-[#1a472a] to-[#0a0a0a] px-2 pt-4 pb-8 text-white sm:px-4 sm:pt-8 sm:pb-16">
       <div className="container flex flex-col items-center justify-center gap-12 px-4 py-16">
         <h1 className="text-5xl font-extrabold tracking-tight text-white sm:text-[5rem]">
           Welcome to{" "}
