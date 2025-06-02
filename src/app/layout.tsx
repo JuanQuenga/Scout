@@ -1,8 +1,15 @@
+// "use client"; // No longer a client component
+
 import "~/styles/globals.css";
-
 import { type Metadata } from "next";
-import Sidebar from "~/components/Sidebar";
+// import Sidebar from "~/components/Sidebar"; // Sidebar is now managed by LayoutClient
+// import { useState, useEffect } from "react";
+// import { usePathname } from "next/navigation";
+// import { Menu as MenuIcon } from "lucide-react";
+import LayoutClient from "~/components/LayoutClient"; // Import the new client wrapper
 
+// Note: Static metadata should be defined outside the component or in a separate file
+// For simplicity, we'll keep it here, but be aware of Next.js recommendations.
 export const metadata: Metadata = {
   title: "Scout | POS",
   description: "Scout POS and Listing Tools",
@@ -12,6 +19,17 @@ export const metadata: Metadata = {
 export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
+  // const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false);
+  // const pathname = usePathname();
+
+  // const toggleMobileSidebar = () => {
+  //   setIsMobileSidebarOpen(!isMobileSidebarOpen);
+  // };
+
+  // useEffect(() => {
+  //   setIsMobileSidebarOpen(false);
+  // }, [pathname]);
+
   return (
     <html lang="en">
       <head>
@@ -29,10 +47,7 @@ export default function RootLayout({
       </head>
       <body className="text-white">
         <div className="flex min-h-screen">
-          <Sidebar />
-          <main className="ml-64 flex-1 bg-gradient-to-b from-[#1a472a] to-[#0a0a0a] p-4 sm:p-6 lg:p-8">
-            {children}
-          </main>
+          <LayoutClient>{children}</LayoutClient>
         </div>
       </body>
     </html>
