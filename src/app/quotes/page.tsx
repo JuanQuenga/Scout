@@ -272,10 +272,20 @@ export default function QuotesPage() {
                       Quote
                     </th>
                     <th className="px-3 py-2 font-semibold text-white/70">
-                      Sell Price (Console Only)
+                      <div className="flex flex-col items-start">
+                        <span>Sell Price</span>
+                        <span className="text-xs font-normal text-white/50">
+                          (Console Only)
+                        </span>
+                      </div>
                     </th>
                     <th className="px-3 py-2 font-semibold text-white/70">
-                      Sell Price (Complete)
+                      <div className="flex flex-col items-start">
+                        <span>Sell Price</span>
+                        <span className="text-xs font-normal text-white/50">
+                          (Complete)
+                        </span>
+                      </div>
                     </th>
                   </tr>
                 </thead>
