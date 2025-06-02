@@ -29,7 +29,7 @@ export default function HomePage() {
           <NavButton href="/spec-finder">
             <Search className="h-5 w-5 transition-colors duration-200 group-hover:text-black" />
             <span className="font-semibold transition-colors duration-200 group-hover:text-black">
-              Spec Finder
+              Insights
             </span>
           </NavButton>
           <NavButton href="/upc-lookup">
