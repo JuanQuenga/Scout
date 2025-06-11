@@ -21,4 +21,17 @@ AI Agent that runs in a browser to check if a device has or is eligble for warra
 
 ## ESN/MDM/iCloud/Blocking Agent
 
-## TODO
+## Auto Lister
+
+[ ] - Should automatically check for iCloud/IMEI/Carrier statuses if an IMEI or Serial Number is given.
+[ ] - Should automatically use an AI Web Agent to find the warranty status of devices if a serial number is given.
+[ ] - Should automatically fill in any data of the device that AI can find.
+[ ] - Should be able to scan images and the listing for any possible errors.
+[ ] - Should be bale to look up and display insights pricing for the past 30 days as a price graph.
+
+## Texts & Phone Calls
+
+[ ] - Possible AI respones for texts
+[ ] - Better phone system. Should direct users to website for quotes.
+[ ] - Should offer to automatically generate responses to text messsages.
+[ ] - Should display insights pricing on devices mentioned in text messages. Should include button to popup and view the list.
