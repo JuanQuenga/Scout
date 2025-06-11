@@ -1,137 +1,148 @@
-"use client"; // Needs to be a client component for date calculations or if we add interactivity
+"use client";
 
+import { mockInventoryData } from "../../data/inventory";
 import {
-  mockInventoryItems,
-  type InventoryItem,
-} from "../../data/mockInventoryItems";
-import {
-  PackageSearch,
-  Clock,
-  CheckCircle2,
-  ListOrdered,
-  DollarSign,
+  User,
   CalendarDays,
-  Tag,
+  Hash,
+  Coins,
+  Search,
+  DollarSign,
+  MapPin,
+  Pencil,
 } from "lucide-react";
-import React, { useMemo } from "react";
+import React from "react";
 
-// Helper function to format dates
-const formatDate = (dateString: string) => {
-  return new Date(dateString).toLocaleDateString("en-US", {
-    year: "numeric",
+// Manual date difference calculation
+const daysSince = (dateString: string): number => {
+  const purchaseDate = new Date(dateString);
+  const today = new Date();
+  // Reset time part to compare dates only
+  purchaseDate.setUTCHours(0, 0, 0, 0);
+  today.setUTCHours(0, 0, 0, 0);
+  const diffTime = Math.abs(today.getTime() - purchaseDate.getTime());
+  const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+  return diffDays;
+};
+
+// Helper to format date string 'yyyy-MM-dd' to 'Mon Day, Year'
+const formatDisplayDate = (dateString: string): string => {
+  const [yearStr, monthStr, dayStr] = dateString.split("-");
+
+  if (!yearStr || !monthStr || !dayStr) {
+    return dateString; // Return original string if format is incomplete
+  }
+
+  const year = parseInt(yearStr, 10);
+  const month = parseInt(monthStr, 10);
+  const day = parseInt(dayStr, 10);
+
+  // Basic validation for NaN
+  if (isNaN(year) || isNaN(month) || isNaN(day)) {
+    return dateString;
+  }
+
+  // Note: month is 0-indexed in JS Date, so month - 1
+  const date = new Date(Date.UTC(year, month - 1, day));
+
+  return date.toLocaleDateString("en-US", {
     month: "short",
     day: "numeric",
+    year: "numeric",
+    timeZone: "UTC",
   });
 };
 
-// Helper function to check if item is ready for processing (3 full days passed)
-const isItemReady = (purchaseDateString: string): boolean => {
-  const purchaseDate = new Date(purchaseDateString);
-  const threeDaysAfterPurchase = new Date(purchaseDate);
-  threeDaysAfterPurchase.setDate(purchaseDate.getDate() + 3);
-
-  const today = new Date();
-  // Set today to midnight to compare dates accurately
-  today.setHours(0, 0, 0, 0);
-  // Set threeDaysAfterPurchase to midnight as well
-  threeDaysAfterPurchase.setHours(0, 0, 0, 0);
-
-  return today.getTime() >= threeDaysAfterPurchase.getTime();
+// Status to row color mapping
+const statusColors: Record<string, string> = {
+  "In Stock": "bg-sky-600/10 hover:bg-sky-600/20",
+  Processing: "bg-yellow-500/10 hover:bg-yellow-500/20",
+  Listed: "bg-green-500/10 hover:bg-green-500/20",
+  Sold: "bg-purple-500/10 hover:bg-purple-500/20",
+  "For Parts": "bg-red-500/10 hover:bg-red-500/20",
 };
 
 export default function InventoryPage() {
-  const sortedInventory = useMemo(() => {
-    return [...mockInventoryItems].sort(
-      (a, b) =>
-        new Date(a.purchaseDate).getTime() - new Date(b.purchaseDate).getTime(),
-    );
-  }, []);
+  const inventory = [...mockInventoryData].sort(
+    (a, b) => a.orderNumber - b.orderNumber,
+  );
 
   return (
     <div className="container mx-auto px-4 py-8 sm:px-6 lg:px-8">
       <header className="mb-8">
-        <div className="mb-2 flex items-center gap-3">
-          <PackageSearch className="h-8 w-8 text-[hsl(142,100%,70%)]" />
-          <h1 className="text-3xl font-bold text-white sm:text-4xl">
-            Current Inventory
-          </h1>
-        </div>
-        <p className="text-sm text-white/80">
-          Items are on a 3-day hold from their purchase date before they can be
-          processed.
-        </p>
+        <h1 className="text-3xl font-bold text-white sm:text-4xl">
+          Inventory Dashboard
+        </h1>
       </header>
-
       <div className="overflow-x-auto rounded-xl bg-white/5 shadow-lg">
         <table className="min-w-full text-sm text-white">
           <thead className="bg-white/10">
             <tr>
-              <th className="px-4 py-3 text-left font-semibold whitespace-nowrap sm:px-6">
-                Item Name
-              </th>
-              <th className="px-4 py-3 text-left font-semibold whitespace-nowrap sm:px-6">
-                Category
-              </th>
-              <th className="px-4 py-3 text-left font-semibold whitespace-nowrap sm:px-6">
+              <th className="px-4 py-3 text-left font-semibold">Order #</th>
+              <th className="px-4 py-3 text-left font-semibold">Customer</th>
+              <th className="px-4 py-3 text-left font-semibold">Device</th>
+              <th className="px-4 py-3 text-left font-semibold">
                 Purchase Date
               </th>
-              <th className="px-4 py-3 text-left font-semibold whitespace-nowrap sm:px-6">
-                Cost
+              <th className="px-4 py-3 text-left font-semibold">Days</th>
+              <th className="px-4 py-3 text-left font-semibold">
+                Purchase Amt
               </th>
-              <th className="px-4 py-3 text-left font-semibold whitespace-nowrap sm:px-6">
-                Status
-              </th>
+              <th className="px-4 py-3 text-left font-semibold">Sell Price</th>
+              <th className="px-4 py-3 text-left font-semibold">Employee</th>
+              <th className="px-4 py-3 text-left font-semibold">Location</th>
+              <th className="px-4 py-3 text-left font-semibold">Notes</th>
             </tr>
           </thead>
           <tbody className="divide-y divide-white/10">
-            {sortedInventory.map((item) => {
-              const ready = isItemReady(item.purchaseDate);
+            {inventory.map((item) => {
+              const daysInInventory = daysSince(item.purchaseDate);
+              const location = daysInInventory > 3 ? "" : item.location;
+              const rowColor = statusColors[item.status] ?? "hover:bg-white/10";
+
               return (
                 <tr
-                  key={item.id}
-                  className="transition-colors hover:bg-white/10"
+                  key={item.orderNumber}
+                  className={`transition-colors ${rowColor}`}
                 >
-                  <td className="px-4 py-3 font-medium whitespace-nowrap text-white/90 sm:px-6">
-                    {item.name}
+                  <td className="px-4 py-3 font-mono text-white/70">
+                    {item.orderNumber}
                   </td>
-                  <td className="px-4 py-3 whitespace-nowrap text-white/70 sm:px-6">
-                    {item.category}
+                  <td className="px-4 py-3">
+                    <button
+                      className="rounded-full p-1.5 hover:bg-white/20"
+                      title={`Customer: ${item.customer.name}\nContact: ${item.customer.contact ?? "N/A"}`}
+                    >
+                      <User className="h-4 w-4" />
+                    </button>
                   </td>
-                  <td className="px-4 py-3 whitespace-nowrap text-white/70 sm:px-6">
-                    <div className="flex items-center gap-1.5">
-                      <CalendarDays className="h-4 w-4 text-white/50" />
-                      {formatDate(item.purchaseDate)}
-                    </div>
+                  <td className="px-4 py-3 font-medium text-white/90">
+                    {item.device.name}
                   </td>
-                  <td className="px-4 py-3 whitespace-nowrap text-white/70 sm:px-6">
-                    <div className="flex items-center gap-1.5">
-                      <DollarSign className="h-4 w-4 text-white/50" />
-                      {item.cost.toFixed(2)}
-                    </div>
+                  <td className="px-4 py-3 text-white/70">
+                    {formatDisplayDate(item.purchaseDate)}
                   </td>
-                  <td className="px-4 py-3 whitespace-nowrap sm:px-6">
-                    {ready ? (
-                      <span className="inline-flex items-center gap-1.5 rounded-full bg-green-600/20 px-2.5 py-1 text-xs font-semibold text-green-300">
-                        <CheckCircle2 className="h-4 w-4" />
-                        Ready for Processing
-                      </span>
-                    ) : (
-                      <span className="inline-flex items-center gap-1.5 rounded-full bg-yellow-500/20 px-2.5 py-1 text-xs font-semibold text-yellow-300">
-                        <Clock className="h-4 w-4" />
-                        On Hold
-                      </span>
-                    )}
+                  <td
+                    className={`px-4 py-3 text-white/70 ${
+                      daysInInventory === 6 ? "font-bold text-red-500" : ""
+                    }`}
+                  >
+                    {daysInInventory}
                   </td>
+                  <td className="px-4 py-3 text-emerald-300">
+                    ${item.purchaseAmount.toFixed(2)}
+                  </td>
+                  <td className="px-4 py-3 text-yellow-300">
+                    ${item.estimatedSellPrice.toFixed(2)}
+                  </td>
+                  <td className="px-4 py-3 text-white/70">{item.employee}</td>
+                  <td className="px-4 py-3 font-mono text-cyan-300">
+                    {location}
+                  </td>
+                  <td className="px-4 py-3 text-white/70">{item.notes}</td>
                 </tr>
               );
             })}
-            {sortedInventory.length === 0 && (
-              <tr>
-                <td colSpan={5} className="py-10 text-center text-white/60">
-                  No items currently in inventory.
-                </td>
-              </tr>
-            )}
           </tbody>
         </table>
       </div>
