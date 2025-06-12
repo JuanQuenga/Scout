@@ -50,12 +50,37 @@ export default function InventoryPage() {
     (a, b) => a.orderNumber - b.orderNumber,
   );
 
+  const rollOffTomorrowCount = inventory.filter(
+    (item) => daysSince(item.purchaseDate) === 2,
+  ).length;
+  const inQueueThreePlusDaysCount = inventory.filter(
+    (item) => daysSince(item.purchaseDate) >= 3,
+  ).length;
+
   return (
     <div className="container mx-auto px-4 py-8 sm:px-6 lg:px-8">
-      <header className="mb-8">
+      <header className="mb-8 flex items-center justify-between">
         <h1 className="text-3xl font-bold text-white sm:text-4xl">
           Inventory Dashboard
         </h1>
+        <div className="flex space-x-4">
+          <div className="rounded-lg bg-black/20 px-6 py-4 text-center">
+            <p className="text-sm font-medium text-gray-300">
+              Rolls Off Tomorrow
+            </p>
+            <p className="text-3xl font-bold text-white">
+              {rollOffTomorrowCount}
+            </p>
+          </div>
+          <div className="rounded-lg bg-black/20 px-6 py-4 text-center">
+            <p className="text-sm font-medium text-gray-300">
+              Left In Queue Today
+            </p>
+            <p className="text-3xl font-bold text-white">
+              {inQueueThreePlusDaysCount}
+            </p>
+          </div>
+        </div>
       </header>
       <div className="overflow-x-auto rounded-xl bg-gray-100 shadow-lg">
         <table className="min-w-full text-sm text-gray-800">
