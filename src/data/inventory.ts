@@ -1,16 +1,22 @@
 export type Customer = {
-  name: string;
+  firstName: string;
+  lastName: string;
   contact?: string;
   address?: string;
+};
+
+export type Employee = {
+  firstName: string;
+  lastName: string;
 };
 
 export type InventoryItem = {
   orderNumber: number;
   customer: Customer;
-  purchaseDate: string; // Stored as 'yyyy-MM-dd'
+  purchaseDate: string; // Stored as ISO 8601 string
   purchaseAmount: number;
   estimatedSellPrice: number;
-  employee: string;
+  employee: Employee;
   location: string;
   notes: string;
   status: "In Stock" | "Listed" | "Sold" | "For Parts" | "Processing";
@@ -22,16 +28,14 @@ export type InventoryItem = {
   };
 };
 
-// Helper function to format a date as 'yyyy-MM-dd'
-const formatDate = (date: Date): string => {
-  const year = date.getFullYear();
-  const month = (date.getMonth() + 1).toString().padStart(2, "0");
-  const day = date.getDate().toString().padStart(2, "0");
-  return `${year}-${month}-${day}`;
-};
-
 // Get dates for today and previous days using native Date
 const today = new Date();
+const zeroDaysAgo = new Date(today);
+zeroDaysAgo.setDate(today.getDate() - 0);
+const oneDaysAgo = new Date(today);
+oneDaysAgo.setDate(today.getDate() - 1);
+const twoDaysAgo = new Date(today);
+twoDaysAgo.setDate(today.getDate() - 2);
 const threeDaysAgo = new Date(today);
 threeDaysAgo.setDate(today.getDate() - 3);
 const fourDaysAgo = new Date(today);
@@ -46,11 +50,15 @@ sevenDaysAgo.setDate(today.getDate() - 7);
 export const mockInventoryData: InventoryItem[] = [
   {
     orderNumber: 1001,
-    customer: { name: "John Smith", contact: "john@example.com" },
-    purchaseDate: formatDate(threeDaysAgo),
+    customer: {
+      firstName: "John",
+      lastName: "Smith",
+      contact: "john@example.com",
+    },
+    purchaseDate: zeroDaysAgo.toISOString(),
     purchaseAmount: 250,
     estimatedSellPrice: 450,
-    employee: "Alice",
+    employee: { firstName: "Alice", lastName: "Smith" },
     location: "A1",
     notes: "Mint condition, original box.",
     status: "In Stock",
@@ -63,11 +71,11 @@ export const mockInventoryData: InventoryItem[] = [
   },
   {
     orderNumber: 1002,
-    customer: { name: "Jane Doe", contact: "555-1234" },
-    purchaseDate: formatDate(threeDaysAgo),
+    customer: { firstName: "Jane", lastName: "Doe", contact: "555-1234" },
+    purchaseDate: zeroDaysAgo.toISOString(),
     purchaseAmount: 600,
     estimatedSellPrice: 950,
-    employee: "Bob",
+    employee: { firstName: "Bob", lastName: "Johnson" },
     location: "B3",
     notes: "Unlocked, 256GB model.",
     status: "Processing",
@@ -80,11 +88,11 @@ export const mockInventoryData: InventoryItem[] = [
   },
   {
     orderNumber: 1003,
-    customer: { name: "Ben Awad" },
-    purchaseDate: formatDate(threeDaysAgo),
+    customer: { firstName: "Ben", lastName: "Awad" },
+    purchaseDate: zeroDaysAgo.toISOString(),
     purchaseAmount: 750,
     estimatedSellPrice: 1200,
-    employee: "Alice",
+    employee: { firstName: "Alice", lastName: "Smith" },
     location: "C2",
     notes: "Includes original charger and case. M3 Pro chip.",
     status: "Listed",
@@ -97,11 +105,15 @@ export const mockInventoryData: InventoryItem[] = [
   },
   {
     orderNumber: 1004,
-    customer: { name: "Nakaia", contact: "nakaia@email.com" },
-    purchaseDate: formatDate(threeDaysAgo),
+    customer: {
+      firstName: "Nakaia",
+      lastName: "",
+      contact: "nakaia@email.com",
+    },
+    purchaseDate: oneDaysAgo.toISOString(),
     purchaseAmount: 150,
     estimatedSellPrice: 220,
-    employee: "Charlie",
+    employee: { firstName: "Charlie", lastName: "Williams" },
     location: "F1-Shelf",
     notes: "No controller included.",
     status: "Sold",
@@ -114,11 +126,15 @@ export const mockInventoryData: InventoryItem[] = [
   },
   {
     orderNumber: 1005,
-    customer: { name: "Previous Customer", contact: "fb-marketplace-id" },
-    purchaseDate: formatDate(threeDaysAgo),
+    customer: {
+      firstName: "Previous",
+      lastName: "Customer",
+      contact: "fb-marketplace-id",
+    },
+    purchaseDate: oneDaysAgo.toISOString(),
     purchaseAmount: 30,
     estimatedSellPrice: 0,
-    employee: "Bob",
+    employee: { firstName: "Bob", lastName: "Johnson" },
     location: "D5",
     notes: "Screen is cracked, does not power on.",
     status: "For Parts",
@@ -132,11 +148,11 @@ export const mockInventoryData: InventoryItem[] = [
   // 4 days old
   {
     orderNumber: 1006,
-    customer: { name: "Mike Johnson" },
-    purchaseDate: formatDate(fourDaysAgo),
+    customer: { firstName: "Mike", lastName: "Johnson" },
+    purchaseDate: oneDaysAgo.toISOString(),
     purchaseAmount: 800,
     estimatedSellPrice: 1100,
-    employee: "Charlie",
+    employee: { firstName: "Charlie", lastName: "Williams" },
     location: "A2",
     notes: "New, in box.",
     status: "In Stock",
@@ -149,11 +165,11 @@ export const mockInventoryData: InventoryItem[] = [
   },
   {
     orderNumber: 1007,
-    customer: { name: "Sarah Lee" },
-    purchaseDate: formatDate(fourDaysAgo),
+    customer: { firstName: "Sarah", lastName: "Lee" },
+    purchaseDate: twoDaysAgo.toISOString(),
     purchaseAmount: 300,
     estimatedSellPrice: 450,
-    employee: "Alice",
+    employee: { firstName: "Alice", lastName: "Smith" },
     location: "A3",
     notes: "Light scratches on screen.",
     status: "In Stock",
@@ -166,11 +182,11 @@ export const mockInventoryData: InventoryItem[] = [
   },
   {
     orderNumber: 1008,
-    customer: { name: "David Chen" },
-    purchaseDate: formatDate(fourDaysAgo),
+    customer: { firstName: "David", lastName: "Chen" },
+    purchaseDate: twoDaysAgo.toISOString(),
     purchaseAmount: 120,
     estimatedSellPrice: 200,
-    employee: "Bob",
+    employee: { firstName: "Bob", lastName: "Johnson" },
     location: "B1",
     notes: "Includes 2 controllers.",
     status: "Processing",
@@ -183,11 +199,11 @@ export const mockInventoryData: InventoryItem[] = [
   },
   {
     orderNumber: 1009,
-    customer: { name: "Emily White" },
-    purchaseDate: formatDate(fourDaysAgo),
+    customer: { firstName: "Emily", lastName: "White" },
+    purchaseDate: twoDaysAgo.toISOString(),
     purchaseAmount: 400,
     estimatedSellPrice: 600,
-    employee: "Charlie",
+    employee: { firstName: "Charlie", lastName: "Williams" },
     location: "B2",
     notes: "Unlocked, 128GB.",
     status: "Listed",
@@ -200,11 +216,11 @@ export const mockInventoryData: InventoryItem[] = [
   },
   {
     orderNumber: 1010,
-    customer: { name: "Chris Green" },
-    purchaseDate: formatDate(fourDaysAgo),
+    customer: { firstName: "Chris", lastName: "Green" },
+    purchaseDate: twoDaysAgo.toISOString(),
     purchaseAmount: 550,
     estimatedSellPrice: 800,
-    employee: "Alice",
+    employee: { firstName: "Alice", lastName: "Smith" },
     location: "C1",
     notes: "Gaming laptop, RTX 3060.",
     status: "In Stock",
@@ -218,11 +234,11 @@ export const mockInventoryData: InventoryItem[] = [
   // 5 days old
   {
     orderNumber: 1011,
-    customer: { name: "Laura Blue" },
-    purchaseDate: formatDate(fiveDaysAgo),
+    customer: { firstName: "Laura", lastName: "Blue" },
+    purchaseDate: twoDaysAgo.toISOString(),
     purchaseAmount: 220,
     estimatedSellPrice: 350,
-    employee: "Bob",
+    employee: { firstName: "Bob", lastName: "Johnson" },
     location: "D1",
     notes: "500GB SSD.",
     status: "Listed",
@@ -235,11 +251,11 @@ export const mockInventoryData: InventoryItem[] = [
   },
   {
     orderNumber: 1012,
-    customer: { name: "Kevin Black" },
-    purchaseDate: formatDate(fiveDaysAgo),
+    customer: { firstName: "Kevin", lastName: "Black" },
+    purchaseDate: threeDaysAgo.toISOString(),
     purchaseAmount: 90,
     estimatedSellPrice: 150,
-    employee: "Charlie",
+    employee: { firstName: "Charlie", lastName: "Williams" },
     location: "E1",
     notes: "Noise-cancelling.",
     status: "In Stock",
@@ -252,11 +268,11 @@ export const mockInventoryData: InventoryItem[] = [
   },
   {
     orderNumber: 1013,
-    customer: { name: "Jessica Brown" },
-    purchaseDate: formatDate(fiveDaysAgo),
+    customer: { firstName: "Jessica", lastName: "Brown" },
+    purchaseDate: threeDaysAgo.toISOString(),
     purchaseAmount: 180,
     estimatedSellPrice: 280,
-    employee: "Alice",
+    employee: { firstName: "Alice", lastName: "Smith" },
     location: "F1",
     notes: "OLED model.",
     status: "Processing",
@@ -269,11 +285,11 @@ export const mockInventoryData: InventoryItem[] = [
   },
   {
     orderNumber: 1014,
-    customer: { name: "Daniel Yellow" },
-    purchaseDate: formatDate(fiveDaysAgo),
+    customer: { firstName: "Daniel", lastName: "Yellow" },
+    purchaseDate: threeDaysAgo.toISOString(),
     purchaseAmount: 70,
     estimatedSellPrice: 120,
-    employee: "Bob",
+    employee: { firstName: "Bob", lastName: "Johnson" },
     location: "G1",
     notes: "Wireless earbuds.",
     status: "In Stock",
@@ -286,11 +302,11 @@ export const mockInventoryData: InventoryItem[] = [
   },
   {
     orderNumber: 1015,
-    customer: { name: "Amanda Purple" },
-    purchaseDate: formatDate(fiveDaysAgo),
+    customer: { firstName: "Amanda", lastName: "Purple" },
+    purchaseDate: threeDaysAgo.toISOString(),
     purchaseAmount: 1500,
     estimatedSellPrice: 2200,
-    employee: "Charlie",
+    employee: { firstName: "Charlie", lastName: "Williams" },
     location: "H1",
     notes: "High-end gaming PC, RTX 4080.",
     status: "Listed",
@@ -304,11 +320,11 @@ export const mockInventoryData: InventoryItem[] = [
   // 6 days old
   {
     orderNumber: 1016,
-    customer: { name: "Steven Orange" },
-    purchaseDate: formatDate(sixDaysAgo),
+    customer: { firstName: "Steven", lastName: "Orange" },
+    purchaseDate: threeDaysAgo.toISOString(),
     purchaseAmount: 350,
     estimatedSellPrice: 500,
-    employee: "Alice",
+    employee: { firstName: "Alice", lastName: "Smith" },
     location: "I1",
     notes: "1TB model.",
     status: "In Stock",
@@ -321,11 +337,11 @@ export const mockInventoryData: InventoryItem[] = [
   },
   {
     orderNumber: 1017,
-    customer: { name: "Olivia Gray" },
-    purchaseDate: formatDate(sixDaysAgo),
+    customer: { firstName: "Olivia", lastName: "Gray" },
+    purchaseDate: threeDaysAgo.toISOString(),
     purchaseAmount: 60,
     estimatedSellPrice: 100,
-    employee: "Bob",
+    employee: { firstName: "Bob", lastName: "Johnson" },
     location: "J1",
     notes: "4K streaming stick.",
     status: "In Stock",
@@ -338,11 +354,11 @@ export const mockInventoryData: InventoryItem[] = [
   },
   {
     orderNumber: 1018,
-    customer: { name: "William Pink" },
-    purchaseDate: formatDate(sixDaysAgo),
+    customer: { firstName: "William", lastName: "Pink" },
+    purchaseDate: threeDaysAgo.toISOString(),
     purchaseAmount: 200,
     estimatedSellPrice: 320,
-    employee: "Charlie",
+    employee: { firstName: "Charlie", lastName: "Williams" },
     location: "K1",
     notes: "With GPS.",
     status: "Processing",
@@ -355,11 +371,11 @@ export const mockInventoryData: InventoryItem[] = [
   },
   {
     orderNumber: 1019,
-    customer: { name: "Sophia Teal" },
-    purchaseDate: formatDate(sixDaysAgo),
+    customer: { firstName: "Sophia", lastName: "Teal" },
+    purchaseDate: threeDaysAgo.toISOString(),
     purchaseAmount: 1100,
     estimatedSellPrice: 1500,
-    employee: "Alice",
+    employee: { firstName: "Alice", lastName: "Smith" },
     location: "L1",
     notes: "M2 chip, 16GB RAM.",
     status: "Listed",
@@ -372,11 +388,11 @@ export const mockInventoryData: InventoryItem[] = [
   },
   {
     orderNumber: 1020,
-    customer: { name: "James Indigo" },
-    purchaseDate: formatDate(sixDaysAgo),
+    customer: { firstName: "James", lastName: "Indigo" },
+    purchaseDate: fourDaysAgo.toISOString(),
     purchaseAmount: 900,
     estimatedSellPrice: 1300,
-    employee: "Bob",
+    employee: { firstName: "Bob", lastName: "Johnson" },
     location: "M1",
     notes: "Foldable phone.",
     status: "In Stock",
@@ -390,11 +406,11 @@ export const mockInventoryData: InventoryItem[] = [
   // 7 days old
   {
     orderNumber: 1021,
-    customer: { name: "Charlotte Crimson" },
-    purchaseDate: formatDate(sevenDaysAgo),
+    customer: { firstName: "Charlotte", lastName: "Crimson" },
+    purchaseDate: fourDaysAgo.toISOString(),
     purchaseAmount: 80,
     estimatedSellPrice: 130,
-    employee: "Charlie",
+    employee: { firstName: "Charlie", lastName: "Williams" },
     location: "N1",
     notes: "Mechanical keyboard.",
     status: "In Stock",
@@ -407,11 +423,11 @@ export const mockInventoryData: InventoryItem[] = [
   },
   {
     orderNumber: 1022,
-    customer: { name: "Henry Magenta" },
-    purchaseDate: formatDate(sevenDaysAgo),
+    customer: { firstName: "Henry", lastName: "Magenta" },
+    purchaseDate: fourDaysAgo.toISOString(),
     purchaseAmount: 70,
     estimatedSellPrice: 110,
-    employee: "Alice",
+    employee: { firstName: "Alice", lastName: "Smith" },
     location: "O1",
     notes: "Wireless gaming mouse.",
     status: "Processing",
@@ -424,11 +440,11 @@ export const mockInventoryData: InventoryItem[] = [
   },
   {
     orderNumber: 1023,
-    customer: { name: "Evelyn Gold" },
-    purchaseDate: formatDate(sevenDaysAgo),
+    customer: { firstName: "Evelyn", lastName: "Gold" },
+    purchaseDate: fourDaysAgo.toISOString(),
     purchaseAmount: 250,
     estimatedSellPrice: 400,
-    employee: "Bob",
+    employee: { firstName: "Bob", lastName: "Johnson" },
     location: "P1",
     notes: "Mirrorless camera.",
     status: "Listed",
@@ -441,11 +457,11 @@ export const mockInventoryData: InventoryItem[] = [
   },
   {
     orderNumber: 1024,
-    customer: { name: "Liam Silver" },
-    purchaseDate: formatDate(sevenDaysAgo),
+    customer: { firstName: "Liam", lastName: "Silver" },
+    purchaseDate: fourDaysAgo.toISOString(),
     purchaseAmount: 130,
     estimatedSellPrice: 200,
-    employee: "Charlie",
+    employee: { firstName: "Charlie", lastName: "Williams" },
     location: "Q1",
     notes: "VR headset.",
     status: "In Stock",
@@ -458,11 +474,11 @@ export const mockInventoryData: InventoryItem[] = [
   },
   {
     orderNumber: 1025,
-    customer: { name: "Mia Bronze" },
-    purchaseDate: formatDate(sevenDaysAgo),
+    customer: { firstName: "Mia", lastName: "Bronze" },
+    purchaseDate: fiveDaysAgo.toISOString(),
     purchaseAmount: 180,
     estimatedSellPrice: 260,
-    employee: "Alice",
+    employee: { firstName: "Alice", lastName: "Smith" },
     location: "R1",
     notes: "Special edition.",
     status: "In Stock",
