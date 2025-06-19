@@ -25,15 +25,36 @@ const daysSince = (dateString: string): number => {
   return diffDays;
 };
 
-// Helper to format date string 'yyyy-MM-dd' to 'Mon Day, Year'
+// Helper to format date string to 'Day, Month DDth' format
 const formatDisplayDate = (dateString: string): string => {
   const date = new Date(dateString);
-  return date.toLocaleDateString("en-US", {
-    month: "short",
-    day: "numeric",
-    year: "numeric",
-    timeZone: "UTC",
-  });
+
+  // Get ordinal suffix for the day (1st, 2nd, 3rd, etc.)
+  const getOrdinalSuffix = (day: number) => {
+    if (day > 3 && day < 21) return "th";
+    switch (day % 10) {
+      case 1:
+        return "st";
+      case 2:
+        return "nd";
+      case 3:
+        return "rd";
+      default:
+        return "th";
+    }
+  };
+
+  const day = date.getDate();
+  const ordinalSuffix = getOrdinalSuffix(day);
+
+  return date
+    .toLocaleDateString("en-US", {
+      weekday: "short",
+      month: "long",
+      day: "numeric",
+      timeZone: "UTC",
+    })
+    .replace(/\d+/, day + ordinalSuffix);
 };
 
 const getRowColorByDays = (days: number) => {
@@ -61,7 +82,7 @@ export default function InventoryPage() {
     <div className="container mx-auto px-4 py-8 sm:px-6 lg:px-8">
       <header className="mb-8 flex items-center justify-between">
         <h1 className="text-3xl font-bold text-white sm:text-4xl">
-          Inventory Dashboard
+          Current Inventory
         </h1>
         <div className="flex space-x-4">
           <div className="rounded-lg bg-black/20 px-6 py-4 text-center">
